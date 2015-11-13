@@ -38,24 +38,44 @@
 	<div class="container" >
 		
 		<?
-		menu(0);
+		menu(1);
 		?>
 		
 		
 		<!-- główna częśćdanej strony -->
 		<div class="row" >
 			<div class="col-md-12 col-md-offset-0">
-				<?
-					$result = mysql_query("SELECT * FROM news ORDER BY id DESC");
-					while ($row = mysql_fetch_assoc($result)) 
-					{
-						echo '<div class="well"><div class="row"><div class="col-md-8"><h3>';
-						echo $row['n_topic'];
-						echo '</h3></div><div class="col-md-4"><h5 class="text-center">'.$row['date'].'</h5></div></div>';
-						echo '<hr></hr><div class="row"><div class="col-md-10 col-md-offset-1">'.$row['n_text'].'</div></div></div><br/>';
-						
-					}
-				?>
+				<div class="well">
+					<div class="row">
+						<nav class="col-md-4 col-md-offset-3" id="myScrollspy">
+							<ol class="nav nav-pills nav-stacked">
+							  <li><a href="#section1">1. Spawanie</a></li>
+							  <li><a href="#section2">2. Kucie na zimno</a></li>
+							</ol>
+						</nav>
+						<div class="row">
+						  <div class="col-md-12">
+							<div id="section1">
+							  <h3>1 Spawanie</h3>
+								<div class="row">
+									<div class="col-md-10 col-md-offset-1">
+									TEKST
+									</div>
+								</div>
+							</div>
+							<hr></hr>
+							<div id="section2">
+								<h3>2. Kucie na zimno</h3>
+								<div class="row">
+									<div class="col-md-10 col-md-offset-1">
+									TEKST
+									</div>
+								</div>
+							</div>
+						  </div>
+						</div>							
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>

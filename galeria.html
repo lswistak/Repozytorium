@@ -22,7 +22,6 @@
 		<![endif]-->
 		
 		<!--captha-->
-		
 		<script src='https://www.google.com/recaptcha/api.js'></script>
 		
 		<!--ikony z font awesome-->
@@ -35,31 +34,46 @@
     </head>
 	
     <body  style="background-image:url(t2.png)">
+	
+	
 	<div class="container" >
 		
+		
+		
 		<?
-		menu(0);
+		menu(2);
 		?>
 		
 		
 		<!-- główna częśćdanej strony -->
 		<div class="row" >
 			<div class="col-md-12 col-md-offset-0">
-				<?
-					$result = mysql_query("SELECT * FROM news ORDER BY id DESC");
-					while ($row = mysql_fetch_assoc($result)) 
-					{
-						echo '<div class="well"><div class="row"><div class="col-md-8"><h3>';
-						echo $row['n_topic'];
-						echo '</h3></div><div class="col-md-4"><h5 class="text-center">'.$row['date'].'</h5></div></div>';
-						echo '<hr></hr><div class="row"><div class="col-md-10 col-md-offset-1">'.$row['n_text'].'</div></div></div><br/>';
-						
-					}
-				?>
+				<div class="row">
+					<div class="col-xs-6 col-md-3">
+						<a href="#" class="thumbnail" data-toggle="modal" data-target="#myModal">
+						<img src="http://placehold.it/200x200" alt="...">
+						</a>
+					</div>
+					<div class="col-xs-6 col-md-3">
+						<a href="#" class="thumbnail">
+						<img src="http://placehold.it/200x200" alt="...">
+						</a>
+					</div>
+					<div class="col-xs-6 col-md-3">
+						<a href="#" class="thumbnail">
+						<img src="http://placehold.it/200x200" alt="...">
+						</a>
+					</div>
+					<div class="col-xs-6 col-md-3">
+						<a href="#" class="thumbnail">
+						<img src="http://placehold.it/200x200" alt="...">
+						</a>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
 	
-	
+
 	</body>
 </html>

@@ -26,6 +26,56 @@ function start()
 	}	
 }
 
+
+
+function menu($id)
+{
+	echo '
+	<div class="row">
+			<div class="col-md-12">
+				<img class="img-responsive" src="naglowek1.png" alt="naglowek" width="100%"> 
+				<div class="row">
+					<div class="col-md-12">
+					<nav class="navbar navbar-default" role="navigation">
+						<!-- Grupowanie do "marki" i przycisku rozwijania menu dla wersji mobilnej -->
+						<div class="navbar-header">
+						  <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#zwin-mobilna-wersja">
+							<span class="sr-only">Rozwiń nawigację</span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+						  </button>
+							  <a href="index.html">
+								<img class="navbar-brand" src="logo.png" alt="logo" >
+							  </a>
+						</div>
+						<!-- Grupowanie elementów menu w celu lepszego wyświetlania na urządzeniach moblinych -->
+						<div class="collapse navbar-collapse" id="zwin-mobilna-wersja">
+						  							  
+						  <ul class="nav navbar-nav navbar-right">
+							<li';
+							if($id==1)echo ' class="active" ';
+							echo'><a href="oferta.html">Oferta</a></li>
+							<li';
+							if($id==2)echo ' class="active" ';
+							echo'><a href="galeria.html">Galeria</a></li>
+							<li';
+							if($id==3)echo ' class="active" ';
+							echo'><a href="kontakt.html">Kontakt</a></li>
+						  </ul>
+						</div><!-- /.navbar-collapse -->
+					</nav>
+					</div>
+				</div>
+			</div>
+		</div>
+	';
+}
+
+
+
+
+
 function cp()
 {
 $znaki = '0123456789';		// dozwolone znaki
