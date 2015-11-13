@@ -1,0 +1,181 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+    <head>
+		<meta http-equiv="Content-Type" content="text/html;charset=utf-8" >
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta http-equiv="Content-Language" content="pl" />
+        <meta name="description" content="mplast" />
+        <meta name="keywords" content="" />
+        <meta name="robots" content="all" />
+        <meta name="revisit-after" content="3 days" />
+        <title>mplast</title>
+		
+		<!-- Bootstrap -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+				
+		<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+		<!--[if lt IE 9]>
+		  <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+		  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+		<![endif]-->
+		
+		<!--captha-->
+		
+		<script src='https://www.google.com/recaptcha/api.js'></script>
+		
+		<!--ikony z font awesome-->
+		<link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+	<?
+		include 'functions.php';
+		start();//rozpoczęcie sesji
+		db_connect();		
+	?>
+    </head>
+    <body>
+		
+		
+		<!--formularz - nowy news-->
+		<form role="form" action="#" method="POST">
+			<div class="form-group">
+				<label for="InputNewsTopic">Temat aktualności</label>
+				<input type="text" class="form-control" id="InputNewsTopic" name="n_topic" placeholder="Wpisz temat" required>
+			</div>
+			<div class="form-group">
+				<label for="InputNewsText">Tekst wiadomości</label>
+				<textarea class="form-control" rows="8" id="InputNewsText" name="n_text" placeholder="Tutaj wpisz treść" required></textarea>
+			</div>
+			<button type="submit" class="btn btn-default">Wyślij!</button>
+		</form>
+		
+		
+		<!--formularz - nowe zapytanie ofertowe-->
+		<form role="form" action="#" method="POST">
+			<div class="form-group">
+				<label for="InputMail">Adres e-mail</label>
+				<input type="email" class="form-control" id="InputMail" name="mail" placeholder="e-mail" required>
+			</div>
+			<div class="form-group">
+				<label for="InputName">Imię i Nazwisko</label>
+				<input type="text" class="form-control" id="InputName" name="name" placeholder="np. Jan Kowalski" required>
+			</div>
+			<div class="form-group">
+				<label for="InputTopic">Wybierz Temat Zapytania</label>
+				<select class="form-control" id="InputTopic" name="m_topic" placeholder="Wybierz" required>
+					<option>Wycena</option>
+					<option>Zamówienie</option>
+					<option>Oferta współpracy</option>
+					<option>Reklamacja</option>
+				</select>
+			</div>
+			<div class="form-group">
+				<label for="InputText">Tekst Zapytania</label>
+				<textarea class="form-control" rows="8" id="InputText" name="m_text" placeholder="Tutaj wpisz treść" required></textarea>
+			</div>
+			<div class="form-group">
+				<label for="InputTel">nr. Telefonu</label>
+				<input type="tel" class="form-control" id="InputTel" name="phone" placeholder="np. 789456123">
+			</div>
+			<div class="g-recaptcha" data-sitekey="6Lcs9A4TAAAAAAfKwFTWNA_zwyskCNvFJcVSLFxC" ></div>
+			<button type="submit" class="btn btn-default">Wyślij!</button>
+		</form>
+		
+		
+		<!--formularz - logowanie-->
+		<form role="form" action="#" method="POST">
+			<div class="form-group">
+				<label for="InputLogin">Login:</label>
+				<input type="text" class="form-control" id="InputLogin" name="login" placeholder="nick" required>
+			</div>
+			<div class="form-group">
+				<label for="InputPassword">Hasło:</label>
+				<input type="password" class="form-control" id="InputPassword" name="password" placeholder="password" required>
+			</div>
+			<button type="submit" class="btn btn-default">Logowanie</button>
+		</form>
+		
+		
+		<?	
+			//dodaj newsa
+			echo("<br/>------------dodaj newsa------------<br/>");
+			if($_POST['n_topic'] && $_POST['n_text'])
+			{
+				$n_topic = addslashes(htmlspecialchars($_POST['n_topic']));
+				$n_text = addslashes(htmlspecialchars($_POST['n_text']));
+				$user_id = 1;
+				//dodaj newsa
+				if(!mysql_query("INSERT INTO news (n_topic,n_text,user) VALUES ('".$n_topic."','".$n_text."',".$user_id.")"))
+				echo("error przy wysyłaniu nowego newsa do bazy");
+				//echo("czasowo zablokowane dodawanie wspisów za każdym odświeżeniem");
+			}
+			
+			
+			echo("<br/>------------wświetlenie newsów dla usera------------<br/>");
+			////wświetlenie newsów dla usera
+			$result = mysql_query("SELECT * FROM news ORDER BY id DESC");
+			while ($row = mysql_fetch_assoc($result)) 
+			{
+				echo $row['date']."<br/>";
+				echo $row['n_topic']."<br/>";
+				echo $row['n_text']."<br/><br/><br/>";
+			}			
+		
+		
+			echo("<br/>------------zapisz zapytanie ofertowe------------<br/>");
+			if($_POST['g-recaptcha-response'])
+			{
+				$response=file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret=6Lcs9A4TAAAAALBmJv763YifR9AY9cVmro_sejrl&response=".$_POST['g-recaptcha-response']."&remoteip=".$_SERVER['REMOTE_ADDR']);
+				if($_POST['m_topic'] && $_POST['m_text'] && $_POST['mail'] && $_POST['name'] && $response.success)
+				{
+					$mail = addslashes(htmlspecialchars($_POST['mail']));
+					$name = addslashes(htmlspecialchars($_POST['name']));
+					$m_topic = addslashes(htmlspecialchars($_POST['m_topic']));
+					$m_text = addslashes(htmlspecialchars($_POST['m_text']));
+					if(is_numeric($_POST['phone']))$phone = $_POST['phone'];
+					else $phone = 0;
+					//zapisz zapytanie ofertowe
+					if(!mysql_query("INSERT INTO ofertask (m_email,name,m_topic,m_text,phone,user) VALUES ('".$mail."','".$name."','".$m_topic."','".$m_text."',".$phone.",1)"))
+					echo("error przy wysyłaniu zapytania ofertowego");
+					//echo("czasowo zablokowane dodawanie wspisów za każdym odświeżeniem");
+				}
+			}
+			else echo("Captha nie wypełniona");
+			
+			
+			echo("<br/>------------wyświetl zapytanie ofertowe------------<br/>");
+			//wyświetl zapytanie ofertowe
+			$result = mysql_query("SELECT * FROM ofertask ORDER BY state");
+			while ($row = mysql_fetch_assoc($result)) 
+			{
+				echo $row['state']."<br/>";
+				echo $row['time']."<br/>";
+				echo $row['m_topic']."<br/>";
+				echo $row['m_text']."<br/>";
+				echo $row['name']."<br/>";
+				echo $row['m_email']."<br/>";
+				echo $row['phone']."<br/><br/><br/>";
+			}			
+			
+			
+			echo("<br/>------------zmiana statusu zapytania ofertowego(losowe dla 'Jestem..')------------<br/>");
+			//zmiana statusu zapytania ofertowego
+			$state_value = rand(1,3);
+			if(!mysql_query("UPDATE ofertask SET state=".$state_value." WHERE id=1"))
+			echo("error przy zmianie statusu");
+			
+			echo("<br/>------------pobranie hasła i loginu------------<br/>");
+			if($_POST['login'])
+			{
+				$username = addslashes(htmlspecialchars($_POST['login']));
+				$pass = MD5(htmlspecialchars($_POST['password']));
+				//logowanie
+				$user = mysql_fetch_array(mysql_query("SELECT * FROM user WHERE username='".$username."' AND password='".$pass."' LIMIT 1"));
+				if($user['username']==$username)echo ("ok"); else echo ("nie udało się zalogować");
+				echo ("<br/><br/><br/><br/>");
+			}
+			mysql_close($db_connection);
+		?>
+	
+    </body>
+</html>
