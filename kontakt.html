@@ -1,0 +1,126 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+    <head>
+		<meta http-equiv="Content-Type" content="text/html;charset=utf-8" >
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta http-equiv="Content-Language" content="pl" />
+        <meta name="description" content="mplast" />
+        <meta name="keywords" content="" />
+        <meta name="robots" content="all" />
+        <meta name="revisit-after" content="3 days" />
+        <title>mplast</title>
+		
+		<!-- Bootstrap -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+				
+		<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+		<!--[if lt IE 9]>
+		  <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+		  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+		<![endif]-->
+		
+		<!--captha-->
+		
+		<script src='https://www.google.com/recaptcha/api.js'></script>
+		
+		<!--ikony z font awesome-->
+		<link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+	<?
+		include 'functions.php';
+		start();//rozpoczęciecie sesji
+		db_connect();		
+	?>
+    </head>
+	
+    <body  style="background-image:url(t2.png)">
+	<div class="container" >
+		
+		<?
+		menu(3);
+		?>
+		
+		
+		<!-- główna częśćdanej strony -->
+		<div class="row" >
+			<div class="col-md-12 col-md-offset-0">
+				<?
+				if($_POST['m_text'])
+				{
+					$response=file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret=6Lcs9A4TAAAAALBmJv763YifR9AY9cVmro_sejrl&response=".$_POST['g-recaptcha-response']."&remoteip=".$_SERVER['REMOTE_ADDR']);
+					
+					if($_POST['m_topic'] && $_POST['m_text'] && $_POST['mail'] && $_POST['name'] && $response.success)
+					{
+						$mail = addslashes(htmlspecialchars($_POST['mail']));
+						$name = addslashes(htmlspecialchars($_POST['name']));
+						$m_topic = addslashes(htmlspecialchars($_POST['m_topic']));
+						$m_text = addslashes(htmlspecialchars($_POST['m_text']));
+						if(is_numeric($_POST['phone']))$phone = $_POST['phone'];
+						else $phone = 0;
+						//zapisz zapytanie ofertowe
+						if(!mysql_query("INSERT INTO ofertask (m_email,name,m_topic,m_text,phone,user) VALUES ('".$mail."','".$name."','".$m_topic."','".$m_text."',".$phone.",1)"))
+						echo '
+							<div class="alert alert-danger">
+								<strong>Przepraszamy</strong> Wystąpił błąd podczas zapisu zapytania.
+							</div>';
+						else 
+						echo '
+							<div class="alert alert-success">
+								<strong>Dziękujemy!</strong> Twoje zapytanie zostało wysłane, niebawem otrzymasz odpowiedź.
+							</div>';
+					}
+				} 
+				
+				?>
+				<div class="well">
+					<div class="row">
+						<div class="col-md-6">
+							<h3>miejscie na lokalizacje google</h3>
+						</div>
+						<div class="col-md-6">
+							<h3>kolumna w której jest kontakt</h3>
+						</div>
+					</div>
+					<hr></hr>
+					<div class="row">
+						<div class="col-md-10 col-md-offset-1">
+						<form role="form" action="#" method="POST">
+							<div class="form-group">
+								<label for="InputMail">Adres e-mail</label>
+								<input type="email" class="form-control" id="InputMail" name="mail" placeholder="e-mail" required>
+							</div>
+							<div class="form-group">
+								<label for="InputName">Imię i Nazwisko</label>
+								<input type="text" class="form-control" id="InputName" name="name" placeholder="np. Jan Kowalski" required>
+							</div>
+							<div class="form-group">
+								<label for="InputTopic">Wybierz Temat Zapytania</label>
+								<select class="form-control" id="InputTopic" name="m_topic" placeholder="Wybierz" required>
+									<option>Wycena</option>
+									<option>Zamówienie</option>
+									<option>Oferta współpracy</option>
+									<option>Reklamacja</option>
+								</select>
+							</div>
+							<div class="form-group">
+								<label for="InputText">Tekst Zapytania</label>
+								<textarea class="form-control" rows="8" id="InputText" name="m_text" placeholder="Tutaj wpisz treść" required></textarea>
+							</div>
+							<div class="form-group">
+								<label for="InputTel">nr. Telefonu</label>
+								<input type="tel" class="form-control" id="InputTel" name="phone" placeholder="np. 789456123">
+							</div>
+							<div class="g-recaptcha" data-sitekey="6Lcs9A4TAAAAAAfKwFTWNA_zwyskCNvFJcVSLFxC" ></div>
+							<button type="submit" class="btn btn-default">Wyślij!</button>
+						</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	
+	</body>
+</html>
