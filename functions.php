@@ -46,7 +46,7 @@ function menu($id)
 							<span class="icon-bar"></span>
 						  </button>
 							  <a href="index.html">
-								<img class="navbar-brand" src="logo.png" alt="logo" >
+								<img class="navbar-brand" src="logo.png" alt="logo">
 							  </a>
 						</div>
 						<!-- Grupowanie elementów menu w celu lepszego wyświetlania na urządzeniach moblinych -->
@@ -55,13 +55,13 @@ function menu($id)
 						  <ul class="nav navbar-nav navbar-right">
 							<li';
 							if($id==1)echo ' class="active" ';
-							echo'><a href="oferta.html">Oferta</a></li>
+							echo'><a href="oferta.html"><i class="fa fa-file-text-o fa-1x fa-fw "></i> Oferta</a></li>
 							<li';
 							if($id==2)echo ' class="active" ';
-							echo'><a href="galeria.html">Galeria</a></li>
+							echo'><a href="galeria.html"><i class="fa fa-th-large fa-1x fa-fw "></i> Galeria</a></li>
 							<li';
 							if($id==3)echo ' class="active" ';
-							echo'><a href="kontakt.html">Kontakt</a></li>
+							echo'><a href="kontakt.html"><i class="fa fa-envelope fa-1x fa-fw "></i> Kontakt</a></li>
 						  </ul>
 						</div><!-- /.navbar-collapse -->
 					</nav>

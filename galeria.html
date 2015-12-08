@@ -36,43 +36,52 @@
     <body  style="background-image:url(t2.png)">
 	
 	
-	<div class="container" >
 		
 		
-		
+		<div class="container">
 		<?
 		menu(2);
 		?>
 		
 		
-		<!-- główna częśćdanej strony -->
-		<div class="row" >
-			<div class="col-md-12 col-md-offset-0">
+			<div class="row">
 				<div class="row">
-					<div class="col-xs-6 col-md-3">
-						<a href="#" class="thumbnail" data-toggle="modal" data-target="#myModal">
-						<img src="http://placehold.it/200x200" alt="...">
-						</a>
-					</div>
-					<div class="col-xs-6 col-md-3">
-						<a href="#" class="thumbnail">
-						<img src="http://placehold.it/200x200" alt="...">
-						</a>
-					</div>
-					<div class="col-xs-6 col-md-3">
-						<a href="#" class="thumbnail">
-						<img src="http://placehold.it/200x200" alt="...">
-						</a>
-					</div>
-					<div class="col-xs-6 col-md-3">
-						<a href="#" class="thumbnail">
-						<img src="http://placehold.it/200x200" alt="...">
-						</a>
+				  <div class="col-lg-4 col-sm-4 col-xs-6"><a title="Image 1" href="#"><img class="thumbnail img-responsive" src="/gal/g1.png"></a></div>
+				  <div class="col-lg-4 col-sm-4 col-xs-6"><a title="Image 2" href="#"><img class="thumbnail img-responsive" src="/gal/g2.png"></a></div>
+				  <div class="col-lg-4 col-sm-4 col-xs-6"><a title="Image 3" href="#"><img class="thumbnail img-responsive" src="/gal/g3.png"></a></div>
+				  <div class="col-lg-4 col-sm-4 col-xs-6"><a title="Image 4" href="#"><img class="thumbnail img-responsive" src="/gal/g4.png"></a></div>
+				  <div class="col-lg-4 col-sm-4 col-xs-6"><a title="Image 5" href="#"><img class="thumbnail img-responsive" src="/gal/g5.png"></a></div>
+				  <div class="col-lg-4 col-sm-4 col-xs-6"><a title="Image 6" href="#"><img class="thumbnail img-responsive" src="/gal/g6.png"></a></div>
+				  <div class="col-lg-4 col-sm-4 col-xs-6"><a title="Image 7" href="#"><img class="thumbnail img-responsive" src="/gal/g7.png"></a></div>
+				  <div class="col-lg-4 col-sm-4 col-xs-6"><a title="Image 8" href="#"><img class="thumbnail img-responsive" src="/gal/g8.png"></a></div>
+				  <div class="col-lg-4 col-sm-4 col-xs-6"><a title="Image 9" href="#"><img class="thumbnail img-responsive" src="/gal/g9.png"></a></div>
+				</div>
+			</div>
+		</div>
+
+
+
+		<div class="modal" id="myModal" role="dialog">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-body">
+						<div id="modalCarousel" class="carousel">
+						  <div class="carousel-inner">
+						  </div>
+						  <a class="carousel-control left" href="#modaCarousel" data-slide="prev"><i class="glyphicon glyphicon-chevron-left"></i></a>
+						  <a class="carousel-control right" href="#modalCarousel" data-slide="next"><i class="glyphicon glyphicon-chevron-right"></i></a>
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-	</div>
+
+
+
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+		<script src="js/bootstrap.min.js"></script>
+		<script src="js/scripts.js"></script>
+		
 	
 
 	</body>

@@ -64,12 +64,59 @@
 				</div>';
 		}
 		
+		session_start(); 
+		
+		if($_POST['wyloguj'])
+		{
+			session_unregister(zalogowany);
+		}
+		
+		
+		if($_POST['login'])
+			{
+				$username = addslashes(htmlspecialchars($_POST['login']));
+				$pass = MD5(htmlspecialchars($_POST['password']));
+				//logowanie
+				$user = mysql_fetch_array(mysql_query("SELECT * FROM user WHERE username='".$username."' AND password='".$pass."' LIMIT 1"));
+				if($user['username']==$username){$_SESSION['zalogowany']=1;}else 
+				echo '
+				<div class="alert alert-warning">
+					<strong>Uwaga!</strong> Błąd przy logowaniu, wprowadź poprawny login i hasło.
+				</div>';
+			}
+			mysql_close($db_connection);
+		
 		?>
 		
+		<?php
 
-		  
+			
+
 		
-		<!-- główna częśćdanej strony -->
+		if (!isset($_SESSION['zalogowany']))
+		echo '
+		<div class="well">
+			<div class="row">
+				<div class="col-md-4 col-md-offset-4">				
+					<form role="form" action="#" method="POST">
+						<div class="form-group">
+							<label for="InputLogin">Login:</label>
+							<input type="text" class="form-control" id="InputLogin" name="login" placeholder="nick" required>
+						</div>
+						<div class="form-group">
+							<label for="InputPassword">Hasło:</label>
+							<input type="password" class="form-control" id="InputPassword" name="password" placeholder="password" required>
+						</div>
+						<button type="submit" class="btn btn-default">Logowanie</button>
+					</form>
+				</div>
+			</div>
+		</div>
+		';
+		else
+		{
+		echo '
+		<!-- główna część danej strony -->
 		<div class="row" >
 			<div class="col-md-12 col-md-offset-0">
 				<div class="well">
@@ -79,13 +126,21 @@
 							  <li class="bg-info"><a href="#fromAddNews">Formularz dodania aktualności</a></li>
 							</ol>
 						</nav>
+						<div class="row" >
+							<div class="col-md-2 col-md-offset-1">
+								<form role="form" action="#" method="POST">
+									<input type="hidden" name="wyloguj" value="1">
+									<button type="submit" class="btn btn-default"><i class="fa fa-sign-out fa-fw"></i>Wyloguj</button>
+								</form>
+							</div>
+						</div>
 					</div>
 					</br></br></br>
 					<div class="row">
-						<div class="col-md-10 col-md-offset-1">
+						<div class="col-md-10 col-md-offset-1">';
 							
 
-								<?
+								
 								$result = mysql_query("SELECT * FROM ofertask ORDER BY state");
 								while ($row = mysql_fetch_assoc($result)) 
 								{
@@ -99,9 +154,9 @@
 										<div class="row">
 											<div class="col-md-4 col-md-offset-0">
 												<div class="btn-group">
-													<a class="btn btn-xs btn-success" href="cms.html?id='.$row['id'].'&state=1"><i class="fa fa-user fa-fw"></i>Nowe</a>
-													<a class="btn btn-xs btn-warning" href="cms.html?id='.$row['id'].'&state=2"><i class="fa fa-ban fa-fw"></i>W toku</a>
-													<a class="btn btn-xs btn-default" href="cms.html?id='.$row['id'].'&state=3"><i class="fa fa-ban fa-fw"></i>Zrealizowane</a>
+													<a class="btn btn-xs btn-success" href="cms.html?id='.$row['id'].'&state=1"><i class="fa fa-plus fa-fw"></i>Nowe</a>
+													<a class="btn btn-xs btn-warning" href="cms.html?id='.$row['id'].'&state=2"><i class="fa fa-spinner fa-fw"></i>W toku</a>
+													<a class="btn btn-xs btn-default" href="cms.html?id='.$row['id'].'&state=3"><i class="fa fa-check fa-fw"></i>Zrealizowane</a>
 												</div>
 											</div>
 											<div class="col-md-4 col-md-offset-0">
@@ -131,9 +186,9 @@
 									</p>
 									</blockquote></br>';
 								}
-								?>
 								
 								
+								echo '
 							
 						</div>
 					</div>
@@ -156,7 +211,8 @@
 					</div>
 				</div>
 			</div>
-		</div>		
+		</div>	
+		';}?>
 	</div>
 	
 	
